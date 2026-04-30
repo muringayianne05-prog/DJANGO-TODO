@@ -1,14 +1,55 @@
-{% extends 'todos/base.html' %}
- {% block title %}Create Todo{% endblock %}
- {% block content %}
- <h1>Create New Todo</h1>
- <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div style="margin-top: 20px;">
-        <button type="submit" class="btn btn-primary">Save Todo</button>
-        <a href="{% url 'todo_list' %}" class="btn" 
-           style="background: #ddd; color: #333;">Cancel</a>
-    </div>
- </form>
- {% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Add Piece{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-wrapper {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    border-top: 4px solid #d88c9a;
+}
+
+h1 {
+    text-align: center;
+    color: #d88c9a;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="form-wrapper">
+    <h1>Add New Piece</h1>
+    <div class="subtitle">Design your collection with elegance</div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div style="text-align:center;">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% url 'todo_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

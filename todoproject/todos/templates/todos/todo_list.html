@@ -1,81 +1,59 @@
-{% extends 'todos/base.html' %}
- {% block title %}Todos{% endblock %}
- {% block extra_css %}
- <style>
-    .todo-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px;
-        border: 1px solid #eee;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        background: #f9f9f9;
-    }
-    .todo-item.completed {
-        background: #e6ffed;
-        opacity: 0.7;
-    }
-    .todo-content {
-        flex: 1;
-        cursor: pointer;
-    }
-    .todo-item.completed .title {
-        text-decoration: line-through;
-        color: #999;
-    }
-    .title {
-        font-weight: bold;
-        color: #333;
-    }
-    .description {
-        font-size: 12px;
-        color: #666;
-        margin-top: 5px;
-    }
-    .actions {
-        display: flex;
-        gap: 5px;
-    }
-    .empty {
-        text-align: center;
-        color: #999;
-        padding: 30px;
-    }
- </style>
- {% endblock %}
- {% block content %}
- <h1> My Todos</h1>
- <a href="{% url 'todo_create' %}" class="btn btn-primary">
- Add New Todo
- </a>
- <div style="margin-top: 20px;">
-    {% if todos %}
-        {% for todo in todos %}
-        <div class="todo-item {% if todo.completed %}completed{% endif %}">
-            <form method="post" action="{% url 'todo_toggle' todo.id %}" 
-                  style="display:inline;" class="todo-content">
-                {% csrf_token %}
-                <button type="submit" style="background:none;border:none;cursor:pointer;">
-                    <div>
-                        <span class="title">
-                            {% if todo.completed %} {% endif %} {{ todo.title }}
-                        </span>
-                        {% if todo.description %}
-                        <div class="description">{{ todo.description }}</div>
-                        {% endif %}
-                    </div>
-                </button>
-            </form>
-            <div class="actions">
-                <a href="{% url 'todo_delete' todo.id %}" class="btn btn-danger">Delete</a>
-            </div>
+{% extends 'base.html' %}
+
+{% block title %}StyleNest{% endblock %}
+
+{% block content %}
+
+<h2 style="margin-bottom:20px; color:#d88c9a;">Your Collection</h2>
+
+<a href="{% url 'todo_create' %}" class="btn btn-primary">+ Add New</a>
+
+<br><br>
+
+{% if todos %}
+    {% for todo in todos %}
+
+    <div style="background:white; padding:15px; border-radius:8px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+
+        <div>
+            <strong {% if todo.completed %}style="text-decoration: line-through; color:#999;"{% endif %}>
+                {{ todo.title }}
+            </strong>
+            {% if todo.description %}
+                <div style="font-size:13px; color:#666;">{{ todo.description }}</div>
+            {% endif %}
         </div>
-        {% endfor %}
-    {% else %}
-        <div class="empty">
-            <p>No todos yet! Add one to get started.</p>
-        </div>
-    {% endif %}
- </div>
- {% endblock %}
+
+        <a href="{% url 'todo_delete' todo.id %}" class="btn btn-secondary">Delete</a>
+
+    </div>
+
+    {% endfor %}
+{% else %}
+    <p>No items yet.</p>
+{% endif %}
+
+{% endblock %}
+✅ 4. CLEAN confirm_delete.html
+{% extends 'base.html' %}
+
+{% block title %}Delete{% endblock %}
+
+{% block content %}
+
+<div style="background:white; padding:30px; border-radius:10px; max-width:400px; margin:auto; text-align:center; border-top:4px solid #d88c9a;">
+
+    <h2 style="color:#d88c9a;">Delete Item</h2>
+
+    <p>Are you sure you want to delete <strong>{{ object }}</strong>?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <button type="submit" class="btn btn-primary">Delete</button>
+        <a href="{% url 'todo_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+
+</div>
+
+{% endblock %}
