@@ -33,27 +33,4 @@
     <p>No items yet.</p>
 {% endif %}
 
-{% endblock %}
-✅ 4. CLEAN confirm_delete.html
-{% extends 'base.html' %}
-
-{% block title %}Delete{% endblock %}
-
-{% block content %}
-
-<div style="background:white; padding:30px; border-radius:10px; max-width:400px; margin:auto; text-align:center; border-top:4px solid #d88c9a;">
-
-    <h2 style="color:#d88c9a;">Delete Item</h2>
-
-    <p>Are you sure you want to delete <strong>{{ object }}</strong>?</p>
-
-    <form method="POST">
-        {% csrf_token %}
-
-        <button type="submit" class="btn btn-primary">Delete</button>
-        <a href="{% url 'todo_list' %}" class="btn btn-secondary">Cancel</a>
-    </form>
-
-</div>
-
-{% endblock %}
+{% endblock %}
